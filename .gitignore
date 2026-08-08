@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+publish/
+*.user
+*.suo
+# KappaCopy build/deploy
+installer/output/
+KappaCopy.code-workspace
+# Local application data / temporary
+clipboard.json
+settings.json
