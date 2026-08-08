@@ -7,6 +7,8 @@ using Avalonia.Threading;
 using KappaCopy.Core;
 using KappaCopy.Engine;
 using KappaCopy.Engine.Windows;
+using KappaCopy.App.Localization;
+
 
 namespace KappaCopy.App;
 
@@ -27,20 +29,25 @@ public partial class MainWindow : Window
 
         _settings = AppSettingsStore.Load();
 
+        LanguageComboBox.SelectedIndex =
+        _settings.Language == LocalizationManager.Italian ? 1 : 0;
+
         SourcesList.ItemsSource = _sources;
 
         EngineStatusText.Text =
             _copyEngine.IsSupported
-                ? "Robocopy disponibile"
-                : "Robocopy non disponibile";
+                ? LocalizationManager.Get("EngineAvailable")
+                : LocalizationManager.Get("EngineNotAvailable");
 
         CompletionSoundCheckBox.IsChecked =
             _settings.CompletionSoundEnabled;
 
         _settingsLoaded = true;
 
-        UpdateSourceSummary();
         Closing += MainWindow_Closing;
+
+        UpdateSourceSummary();
+        UpdateProfileDescription();
 
     }
 
@@ -105,12 +112,13 @@ public partial class MainWindow : Window
         if (_sources.Count == 0)
         {
             StatusText.Text =
-                "Il clipboard di Kappa Copy è vuoto.";
+                LocalizationManager.Get(
+                "ClipboardEmpty");
         }
         else
         {
             StatusText.Text =
-                $"{_sources.Count} elemento/i pronti per la copia.";
+                LocalizationManager.Get("ClipboardNotEmpty").Replace("{0}", _sources.Count.ToString());
         }
     }
 
@@ -119,6 +127,69 @@ public partial class MainWindow : Window
         WindowClosingEventArgs e)
     {
         ShellClipboardStore.Clear();
+    }
+
+    private void LanguageComboBox_SelectionChanged(
+        object? sender,
+        SelectionChangedEventArgs e)
+    {
+        if (!_settingsLoaded)
+            return;
+
+        if (LanguageComboBox.SelectedItem
+            is not ComboBoxItem item)
+        {
+            return;
+        }
+
+        var language =
+            item.Tag?.ToString();
+
+        if (string.IsNullOrWhiteSpace(language))
+            return;
+
+        LocalizationManager.SetLanguage(
+            language);
+
+        _settings.Language =
+            language;
+
+        AppSettingsStore.Save(
+            _settings);
+
+        RefreshLocalizedRuntimeText();
+    }
+
+    private void RefreshLocalizedRuntimeText()
+    {
+        EngineStatusText.Text =
+            _copyEngine.IsSupported
+                ? LocalizationManager.Get(
+                    "EngineAvailable")
+                : LocalizationManager.Get(
+                    "EngineUnavailable");
+
+        UpdateProfileDescription();
+    }
+
+    private void UpdateProfileDescription()
+    {
+        if (ProfileDescriptionText is null || ProfileComboBox is null)
+        {
+            return;
+        }
+        ProfileDescriptionText.Text =
+            ProfileComboBox.SelectedIndex switch
+            {
+                1 => LocalizationManager.Get(
+                    "ProfileFastDescription"),
+
+                2 => LocalizationManager.Get(
+                    "ProfileSafeDescription"),
+
+                _ => LocalizationManager.Get(
+                    "ProfileAutomaticDescription")
+            };
     }
 
     private void CompletionSoundCheckBox_IsCheckedChanged(
@@ -205,17 +276,13 @@ public partial class MainWindow : Window
         UpdateSourceSummary();
     }
 
-    private void ProfileComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ProfileComboBox_SelectionChanged(
+        object? sender,
+        SelectionChangedEventArgs e)
     {
-        if (ProfileDescriptionText is null || ProfileComboBox is null)
+        if (!_settingsLoaded)
             return;
-
-        ProfileDescriptionText.Text = ProfileComboBox.SelectedIndex switch
-        {
-            1 => "Massima velocità: 16 thread e I/O non bufferizzato (/J). Ideale per file grandi.",
-            2 => "Copia riavviabile: 8 thread e modalità /Z. Più adatta a trasferimenti lunghi o instabili.",
-            _ => "Bilanciato: 8 thread, retry limitati. Profilo consigliato come impostazione predefinita."
-        };
+        UpdateProfileDescription();
     }
 
     private async void StartCopy_Click(object? sender, RoutedEventArgs e)
@@ -225,26 +292,30 @@ public partial class MainWindow : Window
 
         if (!_copyEngine.IsSupported)
         {
-            StatusText.Text = "Robocopy è disponibile solo su Windows.";
+            StatusText.Text = 
+            LocalizationManager.Get("RobocopyNotSupported");
             return;
         }
 
         if (_sources.Count == 0)
         {
-            StatusText.Text = "Seleziona almeno un file o una cartella.";
+            StatusText.Text = 
+            LocalizationManager.Get("NoItemsSelected");
             return;
         }
 
         var destination = DestinationTextBox.Text?.Trim();
         if (string.IsNullOrWhiteSpace(destination))
         {
-            StatusText.Text = "Seleziona la cartella di destinazione.";
+            StatusText.Text = 
+            LocalizationManager.Get("DestinationNotSelected");
             return;
         }
 
         if (IsDestinationInsideSource(destination))
         {
-            StatusText.Text = "La destinazione non può essere interna a una cartella sorgente.";
+            StatusText.Text = 
+            LocalizationManager.Get("DestinationInsideSource");
             return;
         }
 
@@ -276,7 +347,7 @@ public partial class MainWindow : Window
             ProgressPercentText.Text = $"{p.OverallPercent}%";
             ItemsProgressText.Text = $"{p.CompletedItems} / {p.TotalItems}";
             StatusText.Text = p.CurrentPath is null
-                ? p.Message ?? "Copia in corso..."
+                ? p.Message ?? LocalizationManager.Get("Copying")
                 : $"{p.Message}  {Path.GetFileName(p.CurrentPath)}";
         });
 
@@ -290,7 +361,8 @@ public partial class MainWindow : Window
 
             if (result.Cancelled)
             {
-                StatusText.Text = "Copia annullata.";
+                StatusText.Text =
+                    LocalizationManager.Get("CopyCancelled");
             }
             else if (result.Success)
             {
@@ -301,7 +373,7 @@ public partial class MainWindow : Window
                     $"{result.CompletedItems} / {result.TotalItems}";
 
                 StatusText.Text =
-                    $"Copia completata. Robocopy exit code {result.ExitCode}.";
+                    LocalizationManager.Get("CopyCompleted").Replace("{0}", result.ExitCode.ToString());
 
                 if (_settings.CompletionSoundEnabled)
                 {
@@ -310,13 +382,15 @@ public partial class MainWindow : Window
             }
             else
             {
-                StatusText.Text = $"Copia terminata con {result.Errors.Count} errore/i. Exit code {result.ExitCode}.";
+                StatusText.Text = 
+                LocalizationManager.Get("CopyFailed").Replace("{0}", result.ExitCode.ToString());
             }
         }
         catch (Exception ex)
         {
             AppendLog($"ERRORE: {ex}");
-            StatusText.Text = $"Errore: {ex.Message}";
+            StatusText.Text = 
+            LocalizationManager.Get("CopyError").Replace("{0}", ex.Message);
         }
         finally
         {
@@ -335,7 +409,8 @@ public partial class MainWindow : Window
         if (_copyCts is null)
             return;
 
-        StatusText.Text = "Annullamento in corso...";
+        StatusText.Text = 
+        LocalizationManager.Get("CopyCancelling");
         _copyCts.Cancel();
     }
 
@@ -357,7 +432,7 @@ public partial class MainWindow : Window
 
     private async Task RefreshSourceStatisticsAsync()
     {
-        UpdateSourceSummary("Calcolo dimensione...");
+        UpdateSourceSummary(LocalizationManager.Get("CalculatingSizes"));
 
         var rows = _sources.ToArray();
         var sizes = await Task.Run(() => rows.Select(CalculateSizeSafely).ToArray());
@@ -418,8 +493,8 @@ public partial class MainWindow : Window
     {
         EmptySourcesText.IsVisible = _sources.Count == 0;
         SourceSummaryText.Text = overrideText ?? (_sources.Count == 0
-            ? "Nessun file o cartella selezionato"
-            : $"{_sources.Count} elemento/i • {FormatBytes(_totalBytes)}");
+            ? LocalizationManager.Get("NoItemsSelected")
+            : $"{_sources.Count} {LocalizationManager.Get("Items") } • {FormatBytes(_totalBytes)}");
         TotalSizeText.Text = FormatBytes(_totalBytes);
         ItemsProgressText.Text = $"0 / {_sources.Count}";
     }
@@ -489,7 +564,9 @@ public partial class MainWindow : Window
     {
         public string Path { get; } = path;
         public bool IsDirectory { get; } = isDirectory;
-        public string TypeLabel => IsDirectory ? "CARTELLA" : "FILE";
+        public string TypeLabel => IsDirectory 
+        ? LocalizationManager.Get("Directory") 
+        : LocalizationManager.Get("File");
         public long SizeBytes { get; set; } = sizeBytes ?? 0;
         public string SizeLabel { get; set; } = sizeBytes.HasValue ? FormatBytes(sizeBytes.Value) : "...";
     }

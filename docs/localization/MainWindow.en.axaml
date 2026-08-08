@@ -19,7 +19,7 @@
           <TextBlock Text="KAPPA COPY"
                      FontSize="26"
                      FontWeight="Bold" />
-          <TextBlock Text="{DynamicResource AppSubtitle}"
+          <TextBlock Text="Fast transfers powered by Robocopy"
                      Foreground="#9AA3B2"
                      FontSize="13" />
         </StackPanel>
@@ -28,7 +28,7 @@
                     Orientation="Horizontal"
                     Spacing="8"
                     VerticalAlignment="Center">
-          <TextBlock Text="{DynamicResource LanguageLabel}"
+          <TextBlock Text="Language"
                      Foreground="#9AA3B2"
                      VerticalAlignment="Center" />
 
@@ -37,9 +37,9 @@
                     SelectedIndex="0"
                     SelectionChanged="LanguageComboBox_SelectionChanged">
             <ComboBoxItem Tag="en"
-                          Content="{DynamicResource LanguageEnglish}" />
+                          Content="English" />
             <ComboBoxItem Tag="it"
-                          Content="{DynamicResource LanguageItalian}" />
+                          Content="Italiano" />
           </ComboBox>
         </StackPanel>
 
@@ -69,12 +69,12 @@
 
             <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
               <StackPanel>
-                <TextBlock Text="{DynamicResource SourcesTitle}"
+                <TextBlock Text="SOURCES"
                            FontWeight="SemiBold"
                            FontSize="13" />
 
                 <TextBlock x:Name="SourceSummaryText"
-                           Text="{DynamicResource NoSources}"
+                           Text="No files or folders selected"
                            Foreground="#8F98A8"
                            FontSize="12"
                            Margin="0,4,0,0" />
@@ -82,12 +82,12 @@
 
               <Button Grid.Column="1"
                       Classes="secondary"
-                      Content="{DynamicResource AddFileButton}"
+                      Content="+ File"
                       Click="AddFiles_Click" />
 
               <Button Grid.Column="2"
                       Classes="secondary"
-                      Content="{DynamicResource AddFolderButton}"
+                      Content="+ Folder"
                       Click="AddFolder_Click" />
             </Grid>
 
@@ -123,7 +123,7 @@
                 </ListBox>
 
                 <TextBlock x:Name="EmptySourcesText"
-                           Text="{DynamicResource EmptySources}"
+                           Text="Add files or folders to copy"
                            Foreground="#687181"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
@@ -132,13 +132,13 @@
             </Border>
 
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-              <Button Content="{DynamicResource RemoveSelectedButton}"
+              <Button Content="Remove selected"
                       Classes="secondary"
                       HorizontalAlignment="Left"
                       Click="RemoveSelected_Click" />
 
               <Button Grid.Column="1"
-                      Content="{DynamicResource ClearListButton}"
+                      Content="Clear list"
                       Classes="secondary"
                       Click="ClearSources_Click" />
             </Grid>
@@ -153,17 +153,17 @@
                 Padding="20">
           <StackPanel Spacing="10">
 
-            <TextBlock Text="{DynamicResource DestinationTitle}"
+            <TextBlock Text="DESTINATION"
                        FontWeight="SemiBold"
                        FontSize="13" />
 
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
               <TextBox x:Name="DestinationTextBox"
-                       Watermark="{DynamicResource DestinationWatermark}"
+                       Watermark="Select the destination folder..."
                        IsReadOnly="True" />
 
               <Button Grid.Column="1"
-                      Content="{DynamicResource BrowseButton}"
+                      Content="Browse..."
                       Classes="secondary"
                       Click="PickDestination_Click" />
             </Grid>
@@ -182,12 +182,12 @@
                 RowSpacing="16">
 
             <StackPanel Spacing="8">
-              <TextBlock Text="{DynamicResource CopyProfileTitle}"
+              <TextBlock Text="COPY PROFILE"
                          FontWeight="SemiBold"
                          FontSize="13" />
 
               <TextBlock x:Name="ProfileDescriptionText"
-                         Text="{DynamicResource ProfileAutomaticDescription}"
+                         Text="Balanced: 8 threads with limited retries."
                          Foreground="#8F98A8"
                          FontSize="12"
                          TextWrapping="Wrap" />
@@ -197,9 +197,9 @@
                       Grid.Column="1"
                       SelectedIndex="0"
                       SelectionChanged="ProfileComboBox_SelectionChanged">
-              <ComboBoxItem Content="{DynamicResource ProfileAutomatic}" />
-              <ComboBoxItem Content="{DynamicResource ProfileFast}" />
-              <ComboBoxItem Content="{DynamicResource ProfileSafe}" />
+              <ComboBoxItem Content="Automatic" />
+              <ComboBoxItem Content="Fast" />
+              <ComboBoxItem Content="Safe" />
             </ComboBox>
 
             <StackPanel Grid.Row="1"
@@ -208,11 +208,11 @@
                         Spacing="10">
 
               <CheckBox x:Name="CompletionSoundCheckBox"
-                        Content="{DynamicResource CompletionSound}"
+                        Content="Completion sound"
                         IsChecked="True"
                         IsCheckedChanged="CompletionSoundCheckBox_IsCheckedChanged" />
 
-              <TextBlock Text="{DynamicResource CompletionSoundDescription}"
+              <TextBlock Text="Play a notification when the copy completes successfully."
                          Foreground="#7F8898"
                          FontSize="11"
                          VerticalAlignment="Center" />
@@ -231,12 +231,12 @@
 
             <Grid ColumnDefinitions="*,Auto">
               <StackPanel>
-                <TextBlock Text="{DynamicResource ProgressTitle}"
+                <TextBlock Text="PROGRESS"
                            FontWeight="SemiBold"
                            FontSize="13" />
 
                 <TextBlock x:Name="StatusText"
-                           Text="{DynamicResource StatusReady}"
+                           Text="Ready"
                            Foreground="#8F98A8"
                            FontSize="12"
                            Margin="0,4,0,0" />
@@ -261,7 +261,7 @@
                       CornerRadius="8"
                       Padding="12">
                 <StackPanel>
-                  <TextBlock Text="{DynamicResource ItemsLabel}"
+                  <TextBlock Text="Items"
                              Foreground="#7F8898"
                              FontSize="11" />
                   <TextBlock x:Name="ItemsProgressText"
@@ -276,7 +276,7 @@
                       CornerRadius="8"
                       Padding="12">
                 <StackPanel>
-                  <TextBlock Text="{DynamicResource SizeLabel}"
+                  <TextBlock Text="Size"
                              Foreground="#7F8898"
                              FontSize="11" />
                   <TextBlock x:Name="TotalSizeText"
@@ -291,7 +291,7 @@
                       CornerRadius="8"
                       Padding="12">
                 <StackPanel>
-                  <TextBlock Text="{DynamicResource TimeLabel}"
+                  <TextBlock Text="Time"
                              Foreground="#7F8898"
                              FontSize="11" />
                   <TextBlock x:Name="ElapsedText"
@@ -303,7 +303,7 @@
 
             </Grid>
 
-            <Expander Header="{DynamicResource RobocopyLog}"
+            <Expander Header="Robocopy log"
                       IsExpanded="False">
               <TextBox x:Name="LogTextBox"
                        Height="150"
@@ -337,20 +337,20 @@
 
         <Button x:Name="CancelButton"
                 Grid.Column="1"
-                Content="{DynamicResource CancelButton}"
+                Content="Cancel"
                 Classes="secondary"
                 IsEnabled="False"
                 Click="Cancel_Click" />
 
         <Button x:Name="CopyButton"
                 Grid.Column="2"
-                Content="{DynamicResource StartCopyButton}"
+                Content="START COPY"
                 Classes="primary"
                 Click="StartCopy_Click" />
 
         <Button x:Name="CloseButton"
                 Grid.Column="3"
-                Content="{DynamicResource CloseButton}"
+                Content="Close"
                 Classes="secondary"
                 IsEnabled="True"
                 Click="Close_Click" />

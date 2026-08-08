@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <x:String x:Key="AppSubtitle">Trasferimenti veloci con Robocopy</x:String>
+
+  <x:String x:Key="LanguageLabel">Lingua</x:String>
+  <x:String x:Key="LanguageItalian">Italiano</x:String>
+  <x:String x:Key="LanguageEnglish">English</x:String>
+
+  <x:String x:Key="SourcesTitle">SORGENTI</x:String>
+  <x:String x:Key="NoSources">Nessun file o cartella selezionato</x:String>
+  <x:String x:Key="AddFileButton">+ File</x:String>
+  <x:String x:Key="AddFolderButton">+ Cartella</x:String>
+  <x:String x:Key="EmptySources">Aggiungi file o cartelle da copiare</x:String>
+  <x:String x:Key="RemoveSelectedButton">Rimuovi selezionato</x:String>
+  <x:String x:Key="ClearListButton">Svuota elenco</x:String>
+
+  <x:String x:Key="DestinationTitle">DESTINAZIONE</x:String>
+  <x:String x:Key="DestinationWatermark">Seleziona la cartella di destinazione...</x:String>
+  <x:String x:Key="BrowseButton">Sfoglia...</x:String>
+
+  <x:String x:Key="CopyProfileTitle">PROFILO COPIA</x:String>
+  <x:String x:Key="ProfileAutomatic">Automatico</x:String>
+  <x:String x:Key="ProfileFast">Veloce</x:String>
+  <x:String x:Key="ProfileSafe">Sicuro</x:String>
+  <x:String x:Key="ProfileAutomaticDescription">Bilanciato: 8 thread, retry limitati.</x:String>
+  <x:String x:Key="ProfileFastDescription">Prestazioni elevate: 16 thread e I/O non bufferizzato.</x:String>
+  <x:String x:Key="ProfileSafeDescription">Riavviabile: 8 thread con modalità /Z.</x:String>
+
+  <x:String x:Key="CompletionSound">Suono al termine</x:String>
+  <x:String x:Key="CompletionSoundDescription">Riproduce un avviso quando la copia termina correttamente.</x:String>
+
+  <x:String x:Key="ProgressTitle">AVANZAMENTO</x:String>
+  <x:String x:Key="StatusReady">Pronto</x:String>
+  <x:String x:Key="ItemsLabel">Elementi</x:String>
+  <x:String x:Key="SizeLabel">Dimensione</x:String>
+  <x:String x:Key="TimeLabel">Tempo</x:String>
+  <x:String x:Key="RobocopyLog">Log Robocopy</x:String>
+
+  <x:String x:Key="CancelButton">Annulla</x:String>
+  <x:String x:Key="StartCopyButton">AVVIA COPIA</x:String>
+  <x:String x:Key="CloseButton">Chiudi</x:String>
+
+  <x:String x:Key="EngineAvailable">Robocopy disponibile</x:String>
+  <x:String x:Key="EngineUnavailable">Robocopy non disponibile</x:String>
+  <x:String x:Key="StatusPreparing">Preparazione...</x:String>
+  <x:String x:Key="StatusCopying">Copia in corso...</x:String>
+  <x:String x:Key="StatusCancelled">Copia annullata</x:String>
+  <x:String x:Key="StatusCompleted">Copia completata.</x:String>
+  <x:String x:Key="ClipboardEmpty">Il clipboard di Kappa Copy è vuoto.</x:String>
+</ResourceDictionary>

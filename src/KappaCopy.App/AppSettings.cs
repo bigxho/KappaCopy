@@ -9,4 +9,5 @@ namespace KappaCopy.App;
 public sealed class AppSettings
 {
     public bool CompletionSoundEnabled { get; set; } = true;
+    public string Language { get; set; } = "en";
 }

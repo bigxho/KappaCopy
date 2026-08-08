@@ -5,9 +5,13 @@
 publish/
 *.user
 *.suo
+.opt/
+*.7z
+*.zip
 # KappaCopy build/deploy
 installer/output/
 KappaCopy.code-workspace
 # Local application data / temporary
 clipboard.json
 settings.json
+info-app.txt

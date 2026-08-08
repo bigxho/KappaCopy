@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using KappaCopy.App.Localization;
 
 namespace KappaCopy.App;
 
@@ -16,6 +17,12 @@ public sealed class App : Application
         if (ApplicationLifetime
             is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var settings = 
+            AppSettingsStore.Load();
+
+            LocalizationManager.Initialize(
+                settings.Language);
+
             var request =
                 StartupRequest.Parse(
                     Program.StartupArguments);
@@ -56,7 +63,7 @@ public sealed class App : Application
         /*
          * --copy deve essere invisibile.
          *
-         * Explorer avvierà KappaCopy.App.exe,
+         * Explorer avvierï¿½ KappaCopy.App.exe,
          * noi registriamo il percorso e terminiamo.
          */
 
