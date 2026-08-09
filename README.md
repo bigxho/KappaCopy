@@ -1,6 +1,7 @@
 # Kappa Copy v0.2.0
 
 Desktop app in C# / .NET 8 / Avalonia UI 12.1.0 that uses Windows `robocopy.exe` as the copy engine.
+<img width="981" height="790" alt="KappaCopy" src="https://github.com/user-attachments/assets/ce4f51ca-38a2-48ba-bbbf-388e233fc54f" />
 
 ## Current features
 
